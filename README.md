@@ -1,4 +1,4 @@
-# Bert-based NLP Semantic Search System with StackOverflow Data
+# Distil-Bert based NLP Semantic Search System on StackOverflow Data
 
 <p align="center">
 
