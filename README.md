@@ -165,6 +165,13 @@ Anyhow, only the text is later encoded into vectors by the `encoder`.
 These vectors are saved in a vector storage by `chunk_indexer`.
 Finally, the two pathways are merged by `join_all` and the processing of that message is concluded.
 
+### Run Index Flow
+
+
+```bash
+python app.py -t index -n 500
+```
+
 
 ### Query
 As in the indexing time, we also need a Flow to process the request message during querying.
@@ -209,8 +216,6 @@ pods:
 In the last step, the `doc_indexer` comes into play. Sharing the same YAML file, `doc_indexer` will load the stored key-value index and retrieve the matched Documents according to the Document ID.
 
 ### Let's take a closer look
-Now the index and query Flows are both ready to work. Before proceeding, let's take a closer look at the two Flows and see the differences between them.
-
 Obviously, they have different structures, although they share most Pods.
 This is a common practice in the Jina world for the sake of speed.
 Except for the `extractor`, both Flows can indeed use identical structures.
@@ -219,45 +224,7 @@ The two-pathway design of the index Flow is intended to speed up message passing
 Another important difference is that the two Flows are used to process different types of request messages. To index a Document, we send an **IndexRequest** to the Flow. While querying, we send a **SearchRequest**. That's why Pods in both Flows can play different roles while sharing the same YAML files. Later, we will dive deep into into the YAML files, where we define the different ways of processing messages of various types.
 
 
-## Run the Flows
-
-### Index
-
-
-```bash
-python app.py -t index -n 500
-```
-
-<details>
-<summary>Click here to see the console output</summary>
-
-<p align="center">
-  <img src=".github/index-demo.png?raw=true" alt="index flow console output">
-</p>
-
-</details>
-
-With the Flows, we can now write the code to run the Flow.
-For indexing, we start by defining the Flow with a YAML file.
-Afterwards, the `load_config()` function will do the magic to construct Pods and connect them together. After that, the `IndexRequest` will be sent to the flow by calling the `index()` function.
-
-```python
-def index(num_docs):
-    f = Flow().load_config("flow-index.yml")
-
-    with f:
-        f.index_lines(
-            filepath=os.environ["JINA_DATA_FILE"],
-            batch_size=8,
-            size=num_docs,
-        )
-```
-
-
-The content of the `IndexRequest` is fed from `index_lines()`, which loads the processed `.csv` file.
-Encoding the text with bert-family models takes a long time. To save your time, here we limit the number of indexed documents to 500.
-
-### Query
+### Run Query Flow
 
 ```bash
 python app.py -t query
