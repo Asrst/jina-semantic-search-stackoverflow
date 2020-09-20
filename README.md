@@ -24,6 +24,59 @@ This repo was referenced from [jina examples](https://github.com/jina-ai/example
 
 Check out details about the docker image [here](README.restful.md).
 
+## Results
+### Highlighting the improvements with semantic search
+
+<table>
+<tr>
+<td>
+
+![](results/q1.png)
+
+</td>
+<td>
+
+![](results/q1s.png)
+
+Here, the only 1st results from stackoverflow search is relevant, but there are more smiliar results to the query asked which are retrieved by semantic search.
+
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+![](results/q2.png)
+
+</td>
+<td>
+
+![](results/q2s.png)
+
+Here, the results are diverse (both from merge & join)
+With help of semantics, it identified merge & join are similar.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+![](results/q3.png)
+
+</td>
+<td>
+
+![](results/q3s.png)
+
+Here, the results from stackoverflow search are not all relevant, while semantic search results are more relevant.
+
+</td>
+</tr>
+
+</table>
+
 ## Prerequirements
 
 This demo requires Python 3.7 or 3.8.
@@ -250,59 +303,6 @@ def print_topk(resp, sentence):
             dialog = match.text.strip()
             print(f'> {idx:>2d}({score:.2f}). {character.upper()} said, "{dialog}"')
 ```
-
-## Results
-### Highlighting the improvements with semantic search
-
-<table>
-<tr>
-<td>
-
-![](results/q1.png)
-
-</td>
-<td>
-
-![](results/q1s.png)
-
-Here, the only 1st results from stackoverflow search is relevant, but there are more smiliar results to the query asked which are retrieved by semantic search.
-
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-![](results/q2.png)
-
-</td>
-<td>
-
-![](results/q2s.png)
-
-Here, the results are diverse (both from merge & join)
-With help of semantics, it identified merge & join are similar.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-![](results/q3.png)
-
-</td>
-<td>
-
-![](results/q3s.png)
-
-Here, the results from stackoverflow search are not all relevant, while semantic search results are more relevant.
-
-</td>
-</tr>
-
-</table>
 
 
 ## Documentation
